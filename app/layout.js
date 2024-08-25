@@ -7,7 +7,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Navbar />
-        <div>
+        <div className="mx-auto bg-red-100 px-4 py-8">
           {children}
         </div>
       </body>
