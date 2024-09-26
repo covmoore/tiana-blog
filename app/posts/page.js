@@ -11,7 +11,7 @@ export default function PostsPage({ params }) {
       <div className="flex justify-center text-5xl mb-12">
         Posts
       </div>
-      <div className="flex flex-row flex-wrap">
+      <div className="flex flex-row flex-wrap justify-center">
         {blogs.map((blog) => (
           <a href={`${path}/${blog.key}`}>
             <div className="flex flex-col mx-2 my-2 border-2 h-72 w-72 border-violet-400 rounded-xl  bg-violet-400 bg-opacity-25">
