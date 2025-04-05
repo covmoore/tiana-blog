@@ -3,14 +3,14 @@ export default function BlogPreview(props) {
   const route = `/posts/${blog.key}`
   return (
     <a href={route}>
-      <div className="border-solid border-2 border-purple-300 border-spacing-28 mb-32">
+      <div className="hover:bg-purple-700 hover:bg-opacity-10 border-solid border-2 border-purple-300 border-spacing-28 mb-32 rounded-md shadow-lg">
         <div className="my-8 mx-8">
           <div className="flex flex-row justify-between my-6 items-center">
-            <text className="font-medium">Date: {blog.date}</text>
+            <text className="font-normal">Date: {blog.date}</text>
             <div className="flex justify-center my-6">
-              <text className="text-4xl font-medium underline">{blog.title}</text>
+              <text className="text-4xl font-medium underline mx-8">{blog.title}</text>
             </div>
-            <text className="font-medium">Author: {blog.author}</text>
+            <text className="font-normal">Author: {blog.author}</text>
           </div>
         </div>
       </div>

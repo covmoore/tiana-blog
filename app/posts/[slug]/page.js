@@ -8,7 +8,7 @@ export default function Post({ params }) {
 
   return (
     <div>
-      <BlogPost {...{blog}} />
+      <BlogPost key={blog.bid} {...{blog}} />
     </div>
   )
 }

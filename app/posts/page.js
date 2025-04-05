@@ -14,7 +14,7 @@ export default function PostsPage({ params }) {
       <div className="flex flex-row flex-wrap">
         {blogs.map((blog) => (
           <a href={`${path}/${blog.key}`}>
-            <div className="flex flex-col mx-2 my-2 border-2 h-72 w-72 border-violet-400 rounded-xl  bg-violet-400 bg-opacity-25">
+            <div className="flex flex-col mx-2 my-2 border-2 h-150 w-150 border-violet-400 rounded-xl shadow-lg">
               <div className="mx-3 my-5">
                 <div className="flex flex-row justify-between mb-24">
                   <text className="mr-6">{blog.date}</text>
