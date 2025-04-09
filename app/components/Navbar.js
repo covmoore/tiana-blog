@@ -36,9 +36,11 @@ export default function Navbar() {
       <div className="mx-auto px-2">
         <div className="relative flex h-20 items-center justify-between">
           <div className="flex flex-1 items-center justify-between sm:items-stretch sm:justify-between">
-            <div className='flex flex-start text-5xl font-bold pl-5 pr-12 text-indigo-400'>
-              <a href='/' >
-                Tiana Montez
+            <div className="flex flex-start text-5xl font-bold pl-5 pr-12 ">
+              <a href='/' className='font-[Caveat] text-accent drop-shadow-md'>
+                <text>
+                  Tiana Montez
+                </text>
               </a>
             </div>
             <div className="hidden sm:ml-0 sm:block">
@@ -49,7 +51,7 @@ export default function Navbar() {
                     href={item.href}
                     aria-current={item.current ? 'page' : undefined}
                     className={classNames(
-                      item.current ? 'bg-gray-900 text-white  hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-700 hover:text-white',
+                      item.current ? 'bg-accent text-white  hover:bg-secondary' : 'text-gray-700 hover:bg-secondary hover:text-white',
                       'rounded-md px-3 py-2 text-lg font-medium',
                     )}
                   >

@@ -8,7 +8,22 @@ export default {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    theme: {},
+    colors: {
+      primary: '#f8a771',
+      secondary: '#ffae23',
+      accent: '#fa6429',
+      background: '#FEF3E2'
+    },
+    theme: {
+      extend: {
+        fontFamily: {
+          tangerine: ['Tangerine', 'serif'],
+          nunito: ['Nunito', 'sans-serif'],
+          caveat: ['Caveat']
+        },
+
+      }
+    },
     extend: {},
   },
   plugins: [],
