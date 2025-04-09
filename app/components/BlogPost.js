@@ -3,7 +3,7 @@ export default function BlogPost(props) {
   const blog = props.blog
   return (
     <div className="border-solid  mb-32">
-      <div className="my-8">
+      <div className="my-2">
         <div className="flex flex-row justify-between my-6">
           <text className="font-medium">Author: {blog.author}</text>
           <text className="font-medium">Date: {blog.date}</text>
