@@ -11,10 +11,10 @@ export default function PostsPage({ params }) {
       <div className="flex justify-center text-5xl mb-12">
         Posts
       </div>
-      <div className="flex flex-row flex-wrap justify-center">
+      <div className="flex flex-row flex-wrap justify-center ">
         {blogs.map((blog) => (
           <a href={`${path}/${blog.key}`}>
-            <div className="flex flex-col mx-2 my-2 border-2 h-150 w-150 border-violet-400 rounded-xl shadow-lg">
+            <div className="flex flex-col mx-2 my-2 border-2 h-150 w-150 rounded-xl shadow-lg bg-primary border-accent hover:bg-secondary hover:bg-opacity-30">
               <div className="mx-3 my-5">
                 <div className="flex flex-row justify-between mb-24">
                   <text className="mr-6">{blog.date}</text>
