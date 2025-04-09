@@ -13,7 +13,7 @@ export const blogs = [
         Curabitur posuere congue lectus eu vulputate. Maecenas vitae nibh quis nunc tincidunt pharetra. Phasellus eu augue eu purus pulvinar dictum in et est. Nunc in suscipit erat. Integer et urna vel enim hendrerit sagittis. Integer a nisi enim. Nullam efficitur nulla ex, ut porttitor leo aliquet non. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
       </text>,
       <div className="flex justify-center">
-        <img className="max-h-96" key="books" src="/_next/static/media/books.f934bb24.jpg" />
+        <img className="flex justify-center max-h-96" key="books" src='/cena.png' />
       </div>,
       <text>
         Nunc nec leo ac velit hendrerit varius. Nullam viverra risus eu dui iaculis interdum. Nam placerat mi id nulla tincidunt, vel efficitur nisi consequat. Ut ac libero non massa finibus mattis. Donec fringilla feugiat erat non condimentum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras vestibulum elementum odio. Pellentesque elementum dignissim ultrices. Morbi auctor in nulla vitae eleifend. Duis ut lacinia lacus, vitae fringilla justo. Suspendisse ex dolor, feugiat eu dui tincidunt, condimentum consectetur urna. Fusce mauris risus, suscipit sed quam at, dapibus convallis diam.
