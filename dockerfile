@@ -6,7 +6,6 @@ WORKDIR /app
 # Install app dependencies
 COPY package.json ./
 
-#RUN npm cache clean --force
 RUN npm install
 
 # Bundle app source
@@ -14,3 +13,4 @@ COPY . .
 
 CMD [ "npm", "run", "dev" ]
 EXPOSE 3000
+#EXPOSE 49153
