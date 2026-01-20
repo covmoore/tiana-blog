@@ -1,10 +1,10 @@
 FROM node:25-alpine
 
 # Create app directory
-WORKDIR /
+WORKDIR /app
 
 # Install app dependencies
-COPY package.json package.json
+COPY package.json ./
 
 RUN npm install
 
@@ -12,4 +12,5 @@ RUN npm install
 COPY . .
 
 CMD [ "npm", "run", "dev" ]
-EXPOSE 8080
+EXPOSE 3000
+#EXPOSE 49153

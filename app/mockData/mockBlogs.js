@@ -5,6 +5,7 @@ export const blogs = [
     key: "intro-to-the-blog",
     author: "Tiana Montez",
     date: "8/23/2024",
+    image: "/breh.png",
     body: [
       <text>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce gravida elit a lacus auctor, sit amet tristique neque congue. Integer molestie eros nec leo congue tincidunt. Aliquam bibendum consectetur condimentum. Curabitur vitae tortor risus. Nam ante erat, tempor vel imperdiet sed, varius nec elit. Sed commodo mauris ut neque viverra, non pulvinar enim vestibulum. Etiam id quam rutrum, bibendum ipsum ut, feugiat augue. Nam luctus ante nisi, sit amet tincidunt erat interdum sed. Donec in quam pharetra, mollis lacus sed, luctus quam. Suspendisse mollis est vel elit sodales fringilla. Donec commodo lobortis ipsum, ut blandit turpis. Cras sollicitudin justo sed massa molestie, nec interdum sapien dapibus. Cras sollicitudin neque lectus, vitae ultricies nibh sagittis quis. Phasellus commodo turpis sit amet finibus porttitor. Etiam convallis tortor non enim imperdiet, sagittis posuere dolor ullamcorper. Donec at convallis felis.
@@ -44,6 +45,7 @@ export const blogs = [
     key: "why-time-is-dancing-is-a-perfect-song",
     author: "Tiana Montez",
     date: "2/14/2024",
+    image: "/cena.png",
     body: [
       <text>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce gravida elit a lacus auctor, sit amet tristique neque congue. Integer molestie eros nec leo congue tincidunt. Aliquam bibendum consectetur condimentum. Curabitur vitae tortor risus. Nam ante erat, tempor vel imperdiet sed, varius nec elit. Sed commodo mauris ut neque viverra, non pulvinar enim vestibulum. Etiam id quam rutrum, bibendum ipsum ut, feugiat augue. Nam luctus ante nisi, sit amet tincidunt erat interdum sed. Donec in quam pharetra, mollis lacus sed, luctus quam. Suspendisse mollis est vel elit sodales fringilla. Donec commodo lobortis ipsum, ut blandit turpis. Cras sollicitudin justo sed massa molestie, nec interdum sapien dapibus. Cras sollicitudin neque lectus, vitae ultricies nibh sagittis quis. Phasellus commodo turpis sit amet finibus porttitor. Etiam convallis tortor non enim imperdiet, sagittis posuere dolor ullamcorper. Donec at convallis felis.
