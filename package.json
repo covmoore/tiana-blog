@@ -4,7 +4,9 @@
     "@headlessui/react": "^2.1.2",
     "next": "^14.2.7",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
   },
   "scripts": {
     "dev": "WATCHPACK_POLLING=true next dev",
@@ -13,6 +15,7 @@
     "lint": "nest lint"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.19",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.41",
     "tailwindcss": "^3.4.10"
