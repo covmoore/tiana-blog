@@ -3,7 +3,7 @@ import remarkGfm from 'remark-gfm'
 
 export default function BlogPost(props) {
     const blog = props.blog
-    console.log("BREH", blog.body)
+    //console.log("BREH", blog.body)
     return (
         <div className="border-solid  mb-32">
             <div className="my-2">
