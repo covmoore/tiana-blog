@@ -1,6 +1,5 @@
 'use client'
 
-import { blogs } from "../../mockData/mockBlogs"
 import BlogPost from "../../components/BlogPost"
 import { fetchBlogs } from "../../apis/blogs"
 

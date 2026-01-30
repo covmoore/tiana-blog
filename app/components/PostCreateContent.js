@@ -13,7 +13,8 @@ export default function PostCreateContent() {
     }
 
     const [isPreviewContext, setPreviewContext] = useState(false);
-    const [content, setContent] = useState("")
+    const [content, setContent] = useState("");
+    const [title, setTitle] = useState("");
 
     return (
         <div>
@@ -25,7 +26,7 @@ export default function PostCreateContent() {
                     <h3>Preview</h3>
                 </button>
             </div>
-            {isPreviewContext ? <CreatePreviewContent {...{ content }} /> : <CreateEditContent {...{ content, setContent }} />}
+            {isPreviewContext ? <CreatePreviewContent {...{ content }} /> : <CreateEditContent {...{ content, setContent, setTitle, title }} />}
         </div>
     )
 }
