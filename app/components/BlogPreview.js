@@ -7,7 +7,7 @@ export default function BlogPreview(props) {
         <div className="my-8 mx-8  flex justify-center flex-col content-center flex-wrap items-center w-[-webkit-fill-available]">
           <div className="flex flex-row  justify-center w-[-webkit-fill-available]">
             <div className="flex flex-row  my-6 items-center justify-between w-[-webkit-fill-available]">
-              <text className="font-normal black">Date: {blog.date}</text>
+              <text className="font-normal black">Date: {blog.dateCreated}</text>
               <div className="flex justify-center my-6">
                 <text className="text-4xl font-medium underline mx-8">{blog.title}</text>
               </div>

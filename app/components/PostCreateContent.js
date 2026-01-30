@@ -1,6 +1,5 @@
 import CreateEditContent from "./CreateEditContent";
 import CreatePreviewContent from "./CreatePreviewContent";
-
 import { useState } from "react"
 
 export default function PostCreateContent() {

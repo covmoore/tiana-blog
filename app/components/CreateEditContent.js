@@ -1,6 +1,6 @@
 'use client'
 
-//import { createPost } from "../apis/blogs"
+import { useRouter } from 'next/navigation';
 import axios from "axios";
 
 function createKey(title) {
@@ -8,6 +8,8 @@ function createKey(title) {
 }
 
 export default function CreateEditContent(props) {
+    const router = useRouter();
+
     const handleContentChange = (event) => {
         props.setContent(event.target.value);
     }
@@ -24,10 +26,10 @@ export default function CreateEditContent(props) {
         }
         console.log("HERE")
         console.log("DATA ", payload);
-        //const {data, loading, error} = createPost(payload);
         try {
             const response = await axios.post("http://localhost:8080/posts", payload);
-            console.log("SUBMIT ", props.content, props.title);
+            console.log("SUBMIT ", response.data);
+            router.push(`/posts/${payload.Key}`)
         } catch (err) {
             console.error("Error creating post: ", err.message)
         }

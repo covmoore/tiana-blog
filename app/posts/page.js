@@ -24,7 +24,7 @@ export default function PostsPage({ params }) {
             <div className="flex flex-col mx-2 my-2 border-2 h-150 w-150 rounded-xl shadow-lg bg-primary border-accent hover:bg-secondary hover:bg-opacity-30">
               <div className="mx-3 my-5">
                 <div className="flex flex-row justify-between mb-24">
-                  <text className="mr-6">{blog.date}</text>
+                  <text className="mr-6">{blog.dateCreated}</text>
                   <text className="ml-6">{blog.author}</text>
                 </div>
                 <div className="flex justify-center flex-wrap">
