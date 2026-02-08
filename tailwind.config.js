@@ -9,10 +9,13 @@ export default {
   ],
   theme: {
     colors: {
-      primary: '#f8a771',
-      secondary: '#ffae23',
-      accent: '#fa6429',
-      background: '#FEF3E2'
+      postForegroundColor: '#fc963d',
+      //postHoverColor: '#FFA970',
+      buttonHoverColor: '#ffae23',
+      buttonSelectedColor: '#ffae23',
+      postBorderColor: '#fa6429',
+      background: '#ffedfd',
+      white: '#fff'
     },
     theme: {
       extend: {
