@@ -38,7 +38,7 @@ export default function Navbar() {
             <div className="flex flex-start text-5xl font-bold pl-5 pr-12 ">
               <a href='/' className='font-[Caveat] text-postBorderColor drop-shadow-md'>
                 <text>
-                  Tiana Montez
+                  Tiana's Blog
                 </text>
               </a>
             </div>

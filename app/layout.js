@@ -7,7 +7,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <div className="bg-background">
-          <Navbar key="nav" />
+          <Navbar key="nav"/>
           <div className="font-[nunito] mx-auto px-4 py-8">
             {children}
           </div>
