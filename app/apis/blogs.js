@@ -74,3 +74,10 @@ export function createPost(payload) {
     const request = usePost(url, payload);
     return request
 }
+
+export function fetchConfig(type) {
+  const url = `http://localhost:8080/config/${type}`
+  const request = useFetch(url);
+  console.log(`CONFIG: ${JSON.stringify(request)}`)
+  return request
+}

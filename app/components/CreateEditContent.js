@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation';
+import { fetchConfig } from '../apis/blogs';
 import axios from "axios";
 
 function createKey(title) {
@@ -9,6 +10,11 @@ function createKey(title) {
 
 export default function CreateEditContent(props) {
     const router = useRouter();
+    const { data, loading, error } = fetchConfig("category")
+    let categories = []
+    if (data) {
+      categories = data;
+    }
 
     const handleContentChange = (event) => {
         props.setContent(event.target.value);
@@ -63,6 +69,18 @@ export default function CreateEditContent(props) {
                 <div className="px-4 py-2 bg-neutral-secondary-medium rounded-b-base">
                     <label htmlFor="editor" className="px-2"> Title</label>
                     <input id="editor" rows="8" className="block w-full py-2 px-4 text-sm text-heading bg-neutral-secondary-medium border-0 focus:ring-0 placeholder:text-body" placeholder="Title name..." required value={props.title} onChange={handleTitleChange} />
+                </div>
+                <div className="px-4 py-2 bg-neutral-secondary-medium rounded-b-base flex-row">
+                  <label htmlFor="editor" className="px-2"> Category</label>
+                  <select>
+                    {categories.map(({categoryId, categoryName}) => (
+                      <div>
+                        <option>
+                          {categoryName}
+                        </option>
+                      </div>
+                    ))}
+                  </select>
                 </div>
                 <div className="px-4 py-2 bg-neutral-secondary-medium rounded-b-base">
                     <label htmlFor="editor" className="px-2">Contents</label>

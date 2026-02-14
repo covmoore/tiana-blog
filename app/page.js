@@ -2,6 +2,7 @@
 
 import Intro from "./components/IntroSection"
 import BlogPreview from "./components/BlogPreview"
+import EmptyPosts from "./components/EmptyPosts"
 import { fetchBlogs } from "./apis/blogs"
 import dawg from '../public/dawg.png'
 import aboutMe from '../public/tiana-about-me.jpeg'
@@ -38,18 +39,23 @@ export default function Page() {
         </div>
         <div>
           <Intro key="intro" />
-          <div className="p-4 bg-gray-100 overflow-y-scroll max-h-[700px]">
-            <div className="sticky top-0 pb-2">
-              {loading && <p>Loading...</p>}
-              {error && <p style={{ color: 'red' }}>error</p>}
-              {/*BLOG POSTS */}
-              {data && <div className="max-w-screen-xl  mx-6 my-10 min-h-screen-m">
-                {blogs.filter((val, i) => i < 5).map((blog) => (
-                  <BlogPreview key={blog.bid} {...{ blog }} />
-                ))}
-              </div>}
-              {/*BLOG POSTS*/}
-            </div>
+          <div className="sticky top-0 pb-2 mx-6 my-10">
+            {loading && <p>Loading...</p>}
+            {error && <p style={{ color: 'red' }}>error</p>}
+            {/*BLOG POSTS */}
+            {blogs.length > 0 &&
+              <div className="p-4 bg-gray-100 overflow-y-scroll max-h-[700px]">
+                <div className="max-w-screen-xl  min-h-screen-m">
+                  {blogs.filter((val, i) => i < 5).map((blog) => (
+                    <BlogPreview key={blog.bid} {...{ blog }} />
+                  ))}
+                </div>
+              </div>
+            }
+            {blogs.length == 0 && <div>
+              <EmptyPosts />
+            </div>}
+            {/*BLOG POSTS*/}
           </div>
         </div>
       </div>
