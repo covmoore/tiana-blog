@@ -1,4 +1,11 @@
 /** @type {import('tailwindcss').Config} */
+
+const colorClasses = [
+  'bookColor',
+  'movieColor',
+  'musicColor'
+];
+
 export default {
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
@@ -15,7 +22,10 @@ export default {
       buttonSelectedColor: '#ffae23',
       postBorderColor: '#fa6429',
       background: '#ffedfd',
-      white: '#fff'
+      white: '#fff',
+      bookColor: "#f79eed",
+      musicColor: '#ad58fc',
+      movieColor: '#fa5943'
     },
     theme: {
       extend: {
@@ -43,6 +53,14 @@ export default {
         fadeOut: 'fadeOut 1.5 ease-out'
       },
     },
+  },
+  purge: {
+    //content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+    // Map over the labels and add them to the safelist
+    safelist: [
+      ...colorClasses.map((color) => `bg-${color}`),
+      ...colorClasses.map((color) => `border-${color}`)
+    ],
   },
   plugins: [
     require('@tailwindcss/typography'),

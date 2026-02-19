@@ -78,6 +78,5 @@ export function createPost(payload) {
 export function fetchConfig(type) {
   const url = `http://localhost:8080/config/${type}`
   const request = useFetch(url);
-  console.log(`CONFIG: ${JSON.stringify(request)}`)
   return request
 }

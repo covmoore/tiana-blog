@@ -12,6 +12,7 @@ export default function PostCreateContent() {
   const [isPreviewContext, setPreviewContext] = useState(false);
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
+  const [category, setCategory] = useState(1);
 
   const handlePressed = (e) => {
     const name = e.target.getAttribute('name');
@@ -47,10 +48,11 @@ export default function PostCreateContent() {
         blog: {
           body: content,
           author: "Tiana Montez",
+          category: category,
           title: title,
           dateCreated: Date.now()
         }
-        }} /> : <CreateEditContent {...{ content, setContent, setTitle, title }} />}
+      }} /> : <CreateEditContent {...{ content, setContent, setTitle, title, setCategory, category }} />}
     </div>
   )
 }

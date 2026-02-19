@@ -1,9 +1,11 @@
+import { getCatColor, classNames } from "../utils"
+
 export default function BlogPreview(props) {
   const blog = props.blog
   const route = `/posts/${blog.key}`
   return (
     <a href={route}>
-      <div className="hover:bg-postBorderColor hover:bg-opacity-30 border-solid border-postBorderColor border-2 bg-postForegroundColor border-spacing-28 mb-12 rounded-md shadow-lg">
+      <div className={`hover:bg-opacity-30 border-solid border-${getCatColor(blog.categoryName)} border-2 bg-postForegroundColor border-spacing-28 mb-12 rounded-md shadow-lg`}>
         <div className=" mx-4  flex justify-center flex-col content-center flex-wrap items-center w-[-webkit-fill-available]">
           <div className="flex flex-row  justify-center w-[-webkit-fill-available]">
             <div className="flex flex-row  my-6 justify-between w-[-webkit-fill-available]">
@@ -11,7 +13,12 @@ export default function BlogPreview(props) {
               <div className="flex justify-center mt-6">
                 <text className="text-4xl font-medium mt-8">{blog.title}</text>
               </div>
-              <text className="font-normal">Author: {blog.author}</text>
+              <div classNames="">
+                <text className={classNames(`bg-${getCatColor(blog.categoryName)}`, "drop-shadow-md px-1 font-medium rounded-md box-border max-h-fit")}>
+                  {blog.categoryName}
+                </text>
+                <text className="ml-2 font-normal">Author: {blog.author}</text>
+              </div>
             </div>
           </div>
           {blog.image && (
