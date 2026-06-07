@@ -1,11 +1,17 @@
 import Markdown from "react-markdown"
 import { classNames, getCatColor } from "../utils"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { deletePost } from "../apis/blogs"
+import { useAuth } from "../hooks/useAuth"
 
 
 export default function BlogPost(props) {
   console.log("PROPS INTO BLOG POSt", props)
   const blog = props.blog
+  const dateCreated = new Date(blog.dateCreated)
+  const router = useRouter()
+  const { isAuthenticated } = useAuth()
   const [showModal, getShowModal] = useState(false);
   function handleDeleteConfirmation() {
     getShowModal(true)
@@ -13,8 +19,10 @@ export default function BlogPost(props) {
   function closeModal() {
     getShowModal(false)
   }
-  function handleDelete() {
+  async function handleDelete() {
+    await deletePost(blog.bid)
     getShowModal(false)
+    router.push('/posts')
   }
   return (
     <div className="border-solid  mb-32 pt-1 bg-white rounded-lg">
@@ -23,15 +31,15 @@ export default function BlogPost(props) {
           <div className="flex flex-row justify-between my-6">
             <text className="font-medium">Author: {blog.author}</text>
             <div className=" flex flex-row-reverse">
-              <text className="pl-1 font-medium">Date: {blog.dateCreated}</text>
+              <text className="pl-1 font-medium">Date: {dateCreated.toDateString()}</text>
               {blog.categoryName &&
                 <text className={classNames(`bg-${getCatColor(blog.categoryName)}`, "drop-shadow-md px-1 font-medium rounded-md box-border max-w-fit max-h-fit")}>
                   {blog.categoryName}
                 </text>}
             </div>
-            <button className={
+            {isAuthenticated && <button className={
               'text-gray-700 hover:bg-buttonHoverColor hover:text-white rounded-md px-3 py-2 text-lg font-medium'
-            } id="open-btn" onClick={handleDeleteConfirmation}>Delete Post</button>
+            } id="open-btn" onClick={handleDeleteConfirmation}>Delete Post</button>}
           </div>
           {showModal &&
             <div id="modal" class="fixed inset-0 bg-gray-600/50 flex justify-center items-center">

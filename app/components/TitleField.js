@@ -4,7 +4,7 @@ export default function TitleField({ value, onChange }) {
       <label htmlFor="title" className="px-2">Title</label>
       <input
         id="title"
-        className="block w-full py-2 px-4 text-sm text-heading bg-neutral-secondary-medium border-0 focus:ring-0 placeholder:text-body"
+        className="block py-2 min-w-[25%] px-4 text-sm text-heading bg-neutral-secondary-medium border-0 focus:ring-0 placeholder:text-body"
         placeholder="Title name..."
         required
         value={value}

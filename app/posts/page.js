@@ -29,7 +29,7 @@ export default function PostsPage({ params }) {
       <div className="flex justify-center text-5xl mb-12">
         Posts
       </div>
-      <div className="flex flex-row flex-wrap justify-center ">
+      <div className="flex flex-row flex-wrap justify-center gap-16">
         {loading && <p>Loading...</p>}
         {error && <p style={{ color: 'red' }}>error</p>}
         {categoryConfig && Object.entries(categoriesMap).map(([key, value]) => {
@@ -38,7 +38,7 @@ export default function PostsPage({ params }) {
               <div className={classNames(`bg-${getCatColor(key)}`, "flex drop-shadow-md px-1 font-medium rounded-md box-border max-w-fit max-h-fit")}>
                 <h1 className='text-lg justify-center'>{key}</h1>
               </div>
-              <div className="p-4 bg-gray-100 overflow-y-scroll max-w-96 max-h-[700px]">
+              <div className="p-4 bg-background overflow-y-scroll max-w-96 max-h-[700px]">
                 <div className="max-w-screen-xl  min-h-screen-m">
                   {data && value.map((blog) => {
                     console.log(`TITLE: ${blog.title}`)
@@ -47,7 +47,7 @@ export default function PostsPage({ params }) {
                         <div className={`flex flex-col mx-2 my-2 border-2 h-150 w-150 rounded-xl shadow-lg bg-postForegroundColor border-${getCatColor(blog.categoryName)} hover:bg-secondary hover:bg-opacity-30`}>
                           <div className="mx-3 my-5">
                             <div className="flex flex-row justify-between mb-24">
-                              <text className="mr-6">{blog.dateCreated}</text>
+                              <text className="mr-6">{new Date(blog.dateCreated).toDateString()}</text>
                               <text className="ml-6">{blog.author}</text>
                             </div>
                             <div className="flex justify-center flex-wrap">

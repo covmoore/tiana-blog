@@ -33,6 +33,11 @@ function useFetch(url) {
     return state;
 }
 
+function authHeaders() {
+    const token = localStorage.getItem('token')
+    return token ? { Authorization: `Bearer ${token}` } : {}
+}
+
 function usePost(url, payload) {
     const [state, setState] = useState({
         data: null,
@@ -44,7 +49,7 @@ function usePost(url, payload) {
         const fetchData = async () => {
             setState({data: null, loading: true, error: null});
             try {
-                const response = await axios.post(url, payload);
+                const response = await axios.post(url, payload, { headers: authHeaders() });
                 setState({data: response.data, loading: false, error: null});
             } catch (error) {
                 console.error("ERR", error)
@@ -73,6 +78,11 @@ export function createPost(payload) {
     const url = "http://localhost:8080/posts"
     const request = usePost(url, payload);
     return request
+}
+
+export async function deletePost(postId) {
+    const response = await axios.delete(`http://localhost:8080/posts/${postId}`, { headers: authHeaders() })
+    return response.data
 }
 
 export function fetchConfig(type) {
