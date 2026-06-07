@@ -14,9 +14,8 @@ export default function Post({ params }) {
     <div>
     {loading && <p>Loading...</p>}
     {error && <p style={{ color: 'red' }}>error</p>}
-    {data && 
-      <BlogPost key={blog.bid} {...{ blog }} />
-    }
+    {data && blog && <BlogPost key={blog.bid} {...{ blog }} />}
+    {data && !blog && <p>Post not found.</p>}
     </div>
     )
 }

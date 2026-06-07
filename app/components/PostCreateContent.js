@@ -12,7 +12,7 @@ export default function PostCreateContent() {
   const [isPreviewContext, setPreviewContext] = useState(false);
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState(1);
+  const [category, setCategory] = useState(null);
 
   const handlePressed = (e) => {
     const name = e.target.getAttribute('name');
