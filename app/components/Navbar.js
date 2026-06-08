@@ -2,10 +2,11 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { usePathname } from 'next/navigation'
 import { classNames } from '../utils'
+import { useAuth } from '../hooks/useAuth'
 
 
 const navigation = [
-  { name: 'Create Post', href: '/create', current: false },
+  { name: 'Create Post', href: '/create', current: false, adminOnly: true },
   { name: 'Home', href: '/', current: true },
   { name: 'Posts', href: '/posts', current: false },
   { name: 'About me', href: '/about-me', current: false },
@@ -27,6 +28,7 @@ function handleRouteChange(href) {
 
 
 export default function Navbar() {
+  const { isAuthenticated } = useAuth()
   handleRouteChange(usePathname())
 
 
@@ -44,7 +46,7 @@ export default function Navbar() {
             </div>
             <div className="hidden sm:ml-0 sm:block">
               <div className="flex space-x-4">
-                {navigation.map((item) => (
+                {navigation.filter(item => !item.adminOnly || isAuthenticated).map((item) => (
                   <a
                     key={item.name}
                     href={item.href}

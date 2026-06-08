@@ -8,3 +8,16 @@ export function formatBody(body) {
 export function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
+
+export function getCatColor(category) {
+  switch(category) {
+    case "books":
+      return "bookColor"
+    case "movies":
+      return "movieColor"
+    case "music":
+      return "musicColor"
+    default:
+      return "black"
+  }
+}

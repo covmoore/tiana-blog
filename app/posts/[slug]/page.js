@@ -7,16 +7,16 @@ export default function Post({ params }) {
   const slug = params.slug
   const {data, loading, error} = fetchBlogs()
   let blog = null;
-  if (data) { 
+  if (data) {
     blog = data.find(({ key }) => key == slug)
   }
+
   return (
     <div>
     {loading && <p>Loading...</p>}
     {error && <p style={{ color: 'red' }}>error</p>}
-    {data && 
-      <BlogPost key={blog.bid} {...{ blog }} />
-    }
+    {data && blog && <BlogPost key={blog.bid} {...{ blog }} />}
+    {data && !blog && <p>Post not found.</p>}
     </div>
     )
 }
