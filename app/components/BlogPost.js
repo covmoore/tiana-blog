@@ -33,7 +33,7 @@ export default function BlogPost(props) {
             <div className=" flex flex-row-reverse">
               <text className="pl-1 font-medium">Date: {dateCreated.toDateString()}</text>
               {blog.categoryName &&
-                <text className={classNames(`bg-${getCatColor(blog.categoryName)}`, "drop-shadow-md px-1 font-medium rounded-md box-border max-w-fit max-h-fit")}>
+                <text className={classNames(`bg-${getCatColor(blog.categoryId)}`, "drop-shadow-md px-1 font-medium rounded-md box-border max-w-fit max-h-fit")}>
                   {blog.categoryName}
                 </text>}
             </div>

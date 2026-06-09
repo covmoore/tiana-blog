@@ -6,8 +6,8 @@ export default function BlogPreview(props) {
   const dateCreated = new Date(blog.dateCreated)
   return (
     <a href={route}>
-      <div className={`hover:bg-opacity-30 border-solid border-${getCatColor(blog.categoryName)} border-2 bg-postForegroundColor border-spacing-28 mb-12 rounded-md shadow-lg`}>
-        <div className=" mx-4  flex justify-center flex-col content-center flex-wrap items-center w-[-webkit-fill-available]">
+      <div className={`bg-postForegroundColor/70 hover:bg-postForegroundColor hover:shadow-2xl transition-all ease-in duration-300 border-solid border-${getCatColor(blog.categoryId)} border-2 border-spacing-28 mb-12 rounded-md shadow-lg w-[45vw] mx-auto`}>
+        <div className=" mx-4 py-[30px] flex justify-center flex-col content-center flex-wrap items-center w-[-webkit-fill-available]">
           <div className="flex flex-row  justify-center w-[-webkit-fill-available]">
             <div className="flex flex-row  my-6 justify-between w-[-webkit-fill-available]">
               <text className="font-normal black">Date: {dateCreated.toDateString()}</text>
@@ -15,7 +15,7 @@ export default function BlogPreview(props) {
                 <text className="text-4xl font-medium mt-8">{blog.title}</text>
               </div>
               <div>
-                <text className={classNames(`bg-${getCatColor(blog.categoryName)}`, "drop-shadow-md px-1 font-medium rounded-md box-border max-h-fit")}>
+                <text className={classNames(`bg-${getCatColor(blog.categoryId)}`, "drop-shadow-md px-1 font-medium rounded-md box-border max-h-fit")}>
                   {blog.categoryName}
                 </text>
                 <text className="ml-2 font-normal">Author: {blog.author}</text>
