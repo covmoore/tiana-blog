@@ -25,7 +25,8 @@ export default {
       white: '#fff',
       bookColor: "#f79eed",
       musicColor: '#ad58fc',
-      movieColor: '#fa5943'
+      movieColor: '#fa5943',
+      rose: '#f64a8a'
     },
     theme: {
       extend: {
@@ -40,17 +41,17 @@ export default {
     extend: {
       keyframes: {
         fadeIn: {
-          '0%': { opacity: '0'},
-          '100%': { opacity: '1'}
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' }
         },
         fadeOut: {
-          '0%': { opacity: '1'},
-          '100%': { opacity: '0'}
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' }
         }
       },
       animation: {
         fadeIn: 'fadeIn 1.0s ease-in',
-        fadeOut: 'fadeOut 1.5 ease-out'
+        fadeOut: 'fadeOut 1.5s ease-out'
       },
     },
   },
