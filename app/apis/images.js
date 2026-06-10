@@ -55,3 +55,10 @@ export async function uploadImage(section, file, postId = null) {
     });
     return response.data;
 }
+
+export async function linkImagesToPost(postId, objectNames) {
+    const response = await axios.put(`${BASE_URL}/images/link`, { postId, objectNames }, {
+        headers: authHeaders()
+    });
+    return response.data;
+}

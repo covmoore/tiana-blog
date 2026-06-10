@@ -1,4 +1,4 @@
-import Markdown from "react-markdown"
+import Markdown, { defaultUrlTransform } from "react-markdown"
 import { classNames, getCatColor } from "../utils"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
@@ -7,6 +7,15 @@ import { useAuth } from "../hooks/useAuth"
 import { getImageUrl } from "../apis/images"
 import fallbackCoverImage from "../../public/dawg.png"
 
+function resolveImageRefs(body) {
+  if (!body) return body
+  return body.replace(/image:\/\/([^)\s]+)/g, (_, ref) => getImageUrl(decodeURIComponent(ref)))
+}
+
+// allow blob: URLs so local previews of inline images render
+function urlTransform(url) {
+  return url.startsWith('blob:') ? url : defaultUrlTransform(url)
+}
 
 export default function BlogPost(props) {
   console.log("PROPS INTO BLOG POSt", props)
@@ -25,7 +34,7 @@ export default function BlogPost(props) {
   async function handleDelete() {
     await deletePost(blog.bid)
     getShowModal(false)
-    router.push('/posts')
+    router.push('/')
   }
   return (
     <div className="border-solid  mb-32 pt-1 bg-white rounded-lg">
@@ -60,7 +69,7 @@ export default function BlogPost(props) {
           </div>
           <div className="my-6">
             <div className="prose lg:prose-xl prose-code:before:hidden prose-code:after:hidden ">
-              <Markdown>{blog.body}</Markdown>
+              <Markdown urlTransform={urlTransform}>{resolveImageRefs(blog.body)}</Markdown>
             </div>
           </div>
         </div>
