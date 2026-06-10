@@ -40,6 +40,10 @@ export function fetchPostImages(postId) {
     return useFetchImages(`${BASE_URL}/images/posts/${postId}`);
 }
 
+export function getImageUrl(objectName) {
+    return `${BASE_URL}/images/serve?object=${encodeURIComponent(objectName)}`;
+}
+
 export async function uploadImage(section, file, postId = null) {
     const formData = new FormData();
     formData.append('image', file);

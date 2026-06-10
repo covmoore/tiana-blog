@@ -13,6 +13,7 @@ export default function PostCreateContent() {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState(null);
+  const [coverImage, setCoverImage] = useState(null);
 
   const handlePressed = (e) => {
     const name = e.target.getAttribute('name');
@@ -52,7 +53,7 @@ export default function PostCreateContent() {
           title: title,
           dateCreated: Date.now()
         }
-      }} /> : <CreateEditContent {...{ content, setContent, setTitle, title, setCategory, category }} />}
+      }} /> : <CreateEditContent {...{ content, setContent, setTitle, title, setCategory, category, coverImage, setCoverImage }} />}
     </div>
   )
 }

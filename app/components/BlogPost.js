@@ -4,12 +4,15 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { deletePost } from "../apis/blogs"
 import { useAuth } from "../hooks/useAuth"
+import { getImageUrl } from "../apis/images"
+import fallbackCoverImage from "../../public/dawg.png"
 
 
 export default function BlogPost(props) {
   console.log("PROPS INTO BLOG POSt", props)
   const blog = props.blog
   const dateCreated = new Date(blog.dateCreated)
+  const coverImageSrc = blog.coverImage ? getImageUrl(blog.coverImage) : fallbackCoverImage.src
   const router = useRouter()
   const { isAuthenticated } = useAuth()
   const [showModal, getShowModal] = useState(false);
@@ -26,6 +29,7 @@ export default function BlogPost(props) {
   }
   return (
     <div className="border-solid  mb-32 pt-1 bg-white rounded-lg">
+      <img className="w-full max-h-[500px] object-cover rounded-t-lg" src={coverImageSrc} />
       <div className="mx-1">
         <div className="my-2 mx-5">
           <div className="flex flex-row justify-between my-6">

@@ -21,6 +21,7 @@ export default {
   theme: {
     colors: {
       postForegroundColor: '#fc963d',
+      blogPreviewOrange: '#fdab64',
       //postHoverColor: '#FFA970',
       buttonHoverColor: '#ffae23',
       buttonSelectedColor: '#ffae23',

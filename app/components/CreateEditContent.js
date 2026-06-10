@@ -2,10 +2,12 @@
 
 import { useRouter } from 'next/navigation';
 import { fetchConfig, authHeaders } from '../apis/blogs';
+import { uploadImage } from '../apis/images';
 import axios from "axios";
 import EditorToolbar from './EditorToolbar';
 import TitleField from './TitleField';
 import CategoryField from './CategoryField';
+import CoverImageField from './CoverImageField';
 import EditorField from './EditorField';
 import PublishButton from './PublishButton';
 
@@ -19,6 +21,11 @@ export default function CreateEditContent(props) {
   const categories = data ?? []
 
   const handleSubmit = async () => {
+    if (!props.coverImage) {
+      console.error("Error creating post: cover image is required")
+      return
+    }
+
     let catId = 0
     if (props.category.categoryId == null) {
       try {
@@ -34,12 +41,14 @@ export default function CreateEditContent(props) {
     }
 
     try {
+      const { objectName } = await uploadImage('post', props.coverImage)
+
       const payload = {
         Title: props.title,
         Key: createKey(props.title),
         Author: "Tiana Montez",
         CategoryId: catId,
-        Image: null,
+        CoverImage: objectName,
         Body: props.content,
       }
       await axios.post("http://localhost:8080/posts", payload, { headers: authHeaders() })
@@ -55,6 +64,7 @@ export default function CreateEditContent(props) {
         <EditorToolbar />
         <TitleField value={props.title} onChange={(e) => props.setTitle(e.target.value)} />
         <CategoryField categories={categories} setCategory={props.setCategory} />
+        <CoverImageField file={props.coverImage} onChange={props.setCoverImage} />
         <EditorField value={props.content} onChange={(e) => props.setContent(e.target.value)} />
       </div>
       <PublishButton />
