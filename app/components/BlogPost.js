@@ -1,15 +1,27 @@
-import Markdown from "react-markdown"
+import Markdown, { defaultUrlTransform } from "react-markdown"
 import { classNames, getCatColor } from "../utils"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { deletePost } from "../apis/blogs"
 import { useAuth } from "../hooks/useAuth"
+import { getImageUrl } from "../apis/images"
+import fallbackCoverImage from "../../public/dawg.png"
 
+function resolveImageRefs(body) {
+  if (!body) return body
+  return body.replace(/image:\/\/([^)\s]+)/g, (_, ref) => getImageUrl(decodeURIComponent(ref)))
+}
+
+// allow blob: URLs so local previews of inline images render
+function urlTransform(url) {
+  return url.startsWith('blob:') ? url : defaultUrlTransform(url)
+}
 
 export default function BlogPost(props) {
   console.log("PROPS INTO BLOG POSt", props)
   const blog = props.blog
   const dateCreated = new Date(blog.dateCreated)
+  const coverImageSrc = blog.coverImage ? getImageUrl(blog.coverImage) : fallbackCoverImage.src
   const router = useRouter()
   const { isAuthenticated } = useAuth()
   const [showModal, getShowModal] = useState(false);
@@ -22,10 +34,11 @@ export default function BlogPost(props) {
   async function handleDelete() {
     await deletePost(blog.bid)
     getShowModal(false)
-    router.push('/posts')
+    router.push('/')
   }
   return (
     <div className="border-solid  mb-32 pt-1 bg-white rounded-lg">
+      <img className="w-full max-h-[500px] object-cover rounded-t-lg" src={coverImageSrc} />
       <div className="mx-1">
         <div className="my-2 mx-5">
           <div className="flex flex-row justify-between my-6">
@@ -56,7 +69,7 @@ export default function BlogPost(props) {
           </div>
           <div className="my-6">
             <div className="prose lg:prose-xl prose-code:before:hidden prose-code:after:hidden ">
-              <Markdown>{blog.body}</Markdown>
+              <Markdown urlTransform={urlTransform}>{resolveImageRefs(blog.body)}</Markdown>
             </div>
           </div>
         </div>

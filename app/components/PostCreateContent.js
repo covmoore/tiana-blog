@@ -1,5 +1,5 @@
 import CreateEditContent from "./CreateEditContent";
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { classNames } from "../utils";
 import BlogPost from "./BlogPost";
 
@@ -13,6 +13,19 @@ export default function PostCreateContent() {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState(null);
+  const [coverImage, setCoverImage] = useState(null);
+  const [inlineImages, setInlineImages] = useState([]);
+
+  const inlineImagesRef = useRef(inlineImages)
+  inlineImagesRef.current = inlineImages
+  useEffect(() => {
+    return () => inlineImagesRef.current.forEach((img) => URL.revokeObjectURL(img.url))
+  }, [])
+
+  const previewBody = inlineImages.reduce(
+    (body, img) => body.replaceAll(`inline://${img.id}`, img.url),
+    content
+  )
 
   const handlePressed = (e) => {
     const name = e.target.getAttribute('name');
@@ -46,13 +59,13 @@ export default function PostCreateContent() {
       </div>
       {isPreviewContext ? <BlogPost {...{
         blog: {
-          body: content,
+          body: previewBody,
           author: "Tiana Montez",
           category: category,
           title: title,
           dateCreated: Date.now()
         }
-      }} /> : <CreateEditContent {...{ content, setContent, setTitle, title, setCategory, category }} />}
+      }} /> : <CreateEditContent {...{ content, setContent, setTitle, title, setCategory, category, coverImage, setCoverImage, inlineImages, setInlineImages }} />}
     </div>
   )
 }

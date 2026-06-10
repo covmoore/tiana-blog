@@ -40,6 +40,10 @@ export function fetchPostImages(postId) {
     return useFetchImages(`${BASE_URL}/images/posts/${postId}`);
 }
 
+export function getImageUrl(objectName) {
+    return `${BASE_URL}/images/serve?object=${encodeURIComponent(objectName)}`;
+}
+
 export async function uploadImage(section, file, postId = null) {
     const formData = new FormData();
     formData.append('image', file);
@@ -47,6 +51,13 @@ export async function uploadImage(section, file, postId = null) {
     if (postId !== null) formData.append('postId', postId);
 
     const response = await axios.post(`${BASE_URL}/images`, formData, {
+        headers: authHeaders()
+    });
+    return response.data;
+}
+
+export async function linkImagesToPost(postId, objectNames) {
+    const response = await axios.put(`${BASE_URL}/images/link`, { postId, objectNames }, {
         headers: authHeaders()
     });
     return response.data;
