@@ -44,7 +44,7 @@ export default function PostsPage({ params }) {
                     console.log(`TITLE: ${blog.title}`)
                     return (
                       <a key={blog.key} href={`${path}/${blog.key}`}>
-                        <div className={`flex flex-col mx-2 my-2 border-2 h-150 w-150 rounded-xl shadow-lg bg-postForegroundColor border-${getCatColor(blog.categoryName)} hover:bg-secondary hover:bg-opacity-30`}>
+                        <div className={`flex flex-col mx-2 my-2 border-2 h-150 w-150 rounded-xl shadow-lg bg-postForegroundColor border-${getCatColor(blog.categoryId)} hover:bg-secondary hover:bg-opacity-30`}>
                           <div className="mx-3 my-5">
                             <div className="flex flex-row justify-between mb-24">
                               <text className="mr-6">{new Date(blog.dateCreated).toDateString()}</text>

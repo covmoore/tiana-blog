@@ -1,9 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 
 const colorClasses = [
-  'bookColor',
-  'movieColor',
-  'musicColor'
+  'categoryColor1',
+  'categoryColor2',
+  'categoryColor3',
+  'categoryColor4',
+  'categoryColor5',
+  'categoryColor6',
+  'categoryColor7'
 ];
 
 export default {
@@ -23,9 +27,14 @@ export default {
       postBorderColor: '#fa6429',
       background: '#ffedfd',
       white: '#fff',
-      bookColor: "#f79eed",
-      musicColor: '#ad58fc',
-      movieColor: '#fa5943'
+      categoryColor1: '#f79eed',
+      categoryColor2: '#fa5943',
+      categoryColor3: '#fa5943',
+      categoryColor4: '#58c4fc',
+      categoryColor5: '#fcd858',
+      categoryColor6: '#58fcb8',
+      categoryColor7: '#c458fc',
+      rose: '#f64a8a'
     },
     theme: {
       extend: {
@@ -38,19 +47,22 @@ export default {
       }
     },
     extend: {
+      boxShadow: {
+        '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.5)',
+      },
       keyframes: {
         fadeIn: {
-          '0%': { opacity: '0'},
-          '100%': { opacity: '1'}
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' }
         },
         fadeOut: {
-          '0%': { opacity: '1'},
-          '100%': { opacity: '0'}
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' }
         }
       },
       animation: {
         fadeIn: 'fadeIn 1.0s ease-in',
-        fadeOut: 'fadeOut 1.5 ease-out'
+        fadeOut: 'fadeOut 1.5s ease-out'
       },
     },
   },

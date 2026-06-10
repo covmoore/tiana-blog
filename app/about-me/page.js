@@ -1,8 +1,12 @@
+'use client'
+
+import { fetchAboutMeImages } from '../apis/images'
+
 const aboutMe = [
   <text>
     Hello, my name is Tiana. This is my blog about music and stuff.
     I am a nurse that is obsessed with music and I talk way too much about it.
-    Especially to my boyfriend who always listens. Speaking of my boyfriend, 
+    Especially to my boyfriend who always listens. Speaking of my boyfriend,
     did I mention that he's the best boyfriend in the world? No? Well he is
   </text>,
   <text>
@@ -12,6 +16,8 @@ const aboutMe = [
 ]
 
 export default function AboutMe() {
+  const { data: images, loading, error } = fetchAboutMeImages()
+
   return (
     <div className="flex flex-col mx-3">
       <div className="flex justify-center">
@@ -24,8 +30,12 @@ export default function AboutMe() {
           </div>
         ))}
       </div>
-      <div>
-        
+      <div className="flex flex-wrap gap-4 mx-60 my-7">
+        {loading && <p>Loading images...</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {images && images.map((img) => (
+          <img key={img.id} src={img.url} alt={img.objectName} className="max-h-[400px] object-cover" />
+        ))}
       </div>
     </div>
   )

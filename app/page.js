@@ -1,62 +1,50 @@
 'use client'
 
+import { useState } from "react"
 import Intro from "./components/IntroSection"
+import IntroImage from "./components/IntroImage"
 import BlogPreview from "./components/BlogPreview"
 import EmptyPosts from "./components/EmptyPosts"
 import { fetchBlogs } from "./apis/blogs"
-import dawg from '../public/dawg.png'
-import aboutMe from '../public/tiana-about-me.jpeg'
-import Image from 'next/image';
+
+const BLOGS_PER_PAGE = 5
 
 export default function Page() {
   const { data, loading, error } = fetchBlogs()
-  let blogs = []
-  if (data) {
-    blogs = data;
-  }
-  let textInAboutClass = "text-5xl font-bold text-red-500 text-center"
-  const handleTextFadeIn = () => {
-    document.getElementById("about-me-text").setAttribute("class", (textInAboutClass + " animate-fadeIn"))
-  }
-  const handleTextFadeOut = () => {
-    document.getElementById("about-me-text").setAttribute("class", (textInAboutClass + " animate-fadeOut opacity-0"))
-  }
+  const blogs = data ?? []
+  const [visibleCount, setVisibleCount] = useState(BLOGS_PER_PAGE)
+
   return (
     <div className="flex flex-col items-center mx-auto">
-      <div className="flex col">
-        <div>
-          <a href="/about-me" onMouseEnter={handleTextFadeIn} onMouseOut={handleTextFadeOut}>
-            <div className="relative text-center">
-              <Image src={aboutMe} className="h-full w-[-webkit-fill-available] object-cover max-h-[650px] mt-20" />
-              <div className="w-full absolute top-0 left-0 text-center mt-[50%]">
-                <h1 id="about-me-text" className={textInAboutClass + " opacity-0"}>
-                  About Me
-                </h1>
+      <Intro key="intro" />
+      <div className="flex col gap-16">
+        <IntroImage />
+      </div>
+      <div>
+        <div className="sticky top-0 pb-2 mx-6 my-10">
+          {loading && <p>Loading...</p>}
+          {error && <p style={{ color: 'red' }}>error</p>}
+          {blogs.length > 0 &&
+            <div className="p-4 bg-gray-100">
+              <div className="max-w-screen-xl min-h-screen-m">
+                {blogs.slice(0, visibleCount).map((blog) => (
+                  <BlogPreview key={blog.bid} {...{ blog }} />
+                ))}
               </div>
-            </div>
-          </a>
-
-        </div>
-        <div>
-          <Intro key="intro" />
-          <div className="sticky top-0 pb-2 mx-6 my-10">
-            {loading && <p>Loading...</p>}
-            {error && <p style={{ color: 'red' }}>error</p>}
-            {/*BLOG POSTS */}
-            {blogs.length > 0 &&
-              <div className="p-4 bg-gray-100 overflow-y-scroll max-h-[700px]">
-                <div className="max-w-screen-xl  min-h-screen-m">
-                  {blogs.filter((val, i) => i < 5).map((blog) => (
-                    <BlogPreview key={blog.bid} {...{ blog }} />
-                  ))}
+              {visibleCount < blogs.length &&
+                <div className="flex justify-center">
+                  <button
+                    type="button"
+                    onClick={() => setVisibleCount((count) => count + BLOGS_PER_PAGE)}
+                    className="text-black rounded-md bg-brand box-border bg-postForegroundColor hover:bg-buttonHoverColor hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+                  >
+                    Show more
+                  </button>
                 </div>
-              </div>
-            }
-            {blogs.length == 0 && <div>
-              <EmptyPosts />
-            </div>}
-            {/*BLOG POSTS*/}
-          </div>
+              }
+            </div>
+          }
+          {blogs.length === 0 && <EmptyPosts />}
         </div>
       </div>
     </div>

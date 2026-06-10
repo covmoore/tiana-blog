@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation';
-import { fetchConfig } from '../apis/blogs';
+import { fetchConfig, authHeaders } from '../apis/blogs';
 import axios from "axios";
 import EditorToolbar from './EditorToolbar';
 import TitleField from './TitleField';
@@ -24,7 +24,7 @@ export default function CreateEditContent(props) {
       try {
         const response = await axios.post("http://localhost:8080/category", {
           CategoryName: props.category.categoryName
-        })
+        }, { headers: authHeaders() })
         catId = response.data.categoryId
       } catch (err) {
         console.error("Error creating category ", err.message)
@@ -42,7 +42,7 @@ export default function CreateEditContent(props) {
         Image: null,
         Body: props.content,
       }
-      await axios.post("http://localhost:8080/posts", payload)
+      await axios.post("http://localhost:8080/posts", payload, { headers: authHeaders() })
       router.push(`/posts/${payload.Key}`)
     } catch (err) {
       console.error("Error creating post: ", err.message)
