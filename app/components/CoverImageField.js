@@ -1,14 +1,17 @@
 'use client'
 
 import { useRef } from 'react'
+import { getImageUrl } from '../apis/images'
 
-export default function CoverImageField({ file, onChange }) {
+export default function CoverImageField({ file, existingImage, onChange }) {
   const fileInputRef = useRef(null)
 
   function handleFileChange(e) {
     const selected = e.target.files?.[0]
     if (selected) onChange(selected)
   }
+
+  const previewSrc = file ? URL.createObjectURL(file) : (existingImage ? getImageUrl(existingImage) : null)
 
   return (
     <div className="px-4 py-2 bg-neutral-secondary-medium">
@@ -28,10 +31,10 @@ export default function CoverImageField({ file, onChange }) {
           onChange={handleFileChange}
           className="hidden"
         />
-        {file && (
+        {previewSrc && (
           <>
-            <img src={URL.createObjectURL(file)} alt="Cover preview" className="h-12 w-12 object-cover rounded-md" />
-            <span className="text-sm text-body">{file.name}</span>
+            <img src={previewSrc} alt="Cover preview" className="h-12 w-12 object-cover rounded-md" />
+            <span className="text-sm text-body">{file ? file.name : 'Current image'}</span>
           </>
         )}
       </div>

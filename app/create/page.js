@@ -1,5 +1,6 @@
 'use client'
 import '../globals.css'
+import { Suspense } from 'react'
 import PostCreateContent from '../components/PostCreateContent'
 import { useAuth } from '../hooks/useAuth'
 
@@ -22,7 +23,9 @@ export default function Create() {
                 <h1>Create New Post</h1>
             </div>
             <div className='pt-6'>
-                <PostCreateContent />
+                <Suspense fallback={null}>
+                    <PostCreateContent />
+                </Suspense>
             </div>
         </div>
     )

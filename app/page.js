@@ -6,11 +6,13 @@ import IntroImage from "./components/IntroImage"
 import BlogPreview from "./components/BlogPreview"
 import EmptyPosts from "./components/EmptyPosts"
 import { fetchBlogs } from "./apis/blogs"
+import { useAuth } from "./hooks/useAuth"
 
 const BLOGS_PER_PAGE = 5
 
 export default function Page() {
-  const { data, loading, error } = fetchBlogs()
+  const { isAuthenticated } = useAuth()
+  const { data, loading, error } = fetchBlogs(isAuthenticated)
   const blogs = data ?? []
   const [visibleCount, setVisibleCount] = useState(BLOGS_PER_PAGE)
 
