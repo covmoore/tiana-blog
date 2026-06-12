@@ -2,8 +2,10 @@
 
 import { usePathname } from 'next/navigation'
 import { fetchBlogs, fetchConfig } from '../apis/blogs'
+import { getImageUrl } from '../apis/images'
 import { getCatColor, classNames } from '../utils'
 import { useAuth } from '../hooks/useAuth'
+import fallbackCoverImage from '../../public/dawg.png'
 
 export default function PostsPage({ params }) {
   const path = usePathname()
@@ -45,12 +47,17 @@ export default function PostsPage({ params }) {
                   {data && value.map((blog) => {
                     const isDraft = blog.status === 'draft'
                     const route = isDraft ? `/create?postId=${blog.bid}` : `${path}/${blog.key}`
+                    const coverImageSrc = blog.coverImage ? getImageUrl(blog.coverImage) : fallbackCoverImage.src
                     return (
                       <a key={blog.key || blog.bid} href={route}>
                         <div className={classNames(
-                          isDraft ? 'bg-draftGray' : 'bg-postForegroundColor',
-                          `flex flex-col mx-2 my-2 border-2 h-150 w-150 rounded-xl shadow-lg border-${getCatColor(blog.categoryId)} hover:bg-secondary hover:bg-opacity-30`
+                          isDraft ? 'bg-draftGray/90 hover:bg-draftGray' : 'bg-postForegroundColor/90 hover:bg-postForegroundColor',
+                          `relative isolate overflow-hidden flex flex-col mx-2 my-2 border-2 h-150 w-150 rounded-xl shadow-lg border-${getCatColor(blog.categoryId)} hover:bg-secondary hover:bg-opacity-30`
                         )}>
+                          <div
+                            className={classNames("absolute inset-0 -z-10 bg-cover bg-center", isDraft ? "opacity-30" : "opacity-40")}
+                            style={{ backgroundImage: `url(${coverImageSrc})` }}
+                          />
                           <div className="mx-3 my-5">
                             <div className="flex flex-row justify-between mb-24">
                               <text className="mr-6">{blog.dateCreated ? new Date(blog.dateCreated).toDateString() : '-'}</text>

@@ -1,6 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+
+const PREVIEW_MODE_KEY = 'previewMode'
+const PREVIEW_MODE_EVENT = 'previewModeChange'
 
 function isTokenValid(token) {
   try {
@@ -12,14 +15,41 @@ function isTokenValid(token) {
 }
 
 export function useAuth() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [previewMode, setPreviewMode] = useState(false)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const token = localStorage.getItem('token')
-    setIsAuthenticated(!!token && isTokenValid(token))
+    setIsAdmin(!!token && isTokenValid(token))
+    setPreviewMode(sessionStorage.getItem(PREVIEW_MODE_KEY) === 'true')
     setLoading(false)
+
+    const handlePreviewModeChange = () => {
+      setPreviewMode(sessionStorage.getItem(PREVIEW_MODE_KEY) === 'true')
+    }
+    window.addEventListener(PREVIEW_MODE_EVENT, handlePreviewModeChange)
+    return () => window.removeEventListener(PREVIEW_MODE_EVENT, handlePreviewModeChange)
   }, [])
 
-  return { isAuthenticated, loading }
+  const enterPreviewMode = useCallback(() => {
+    sessionStorage.setItem(PREVIEW_MODE_KEY, 'true')
+    setPreviewMode(true)
+    window.dispatchEvent(new Event(PREVIEW_MODE_EVENT))
+  }, [])
+
+  const exitPreviewMode = useCallback(() => {
+    sessionStorage.removeItem(PREVIEW_MODE_KEY)
+    setPreviewMode(false)
+    window.dispatchEvent(new Event(PREVIEW_MODE_EVENT))
+  }, [])
+
+  return {
+    isAuthenticated: isAdmin && !previewMode,
+    isAdmin,
+    previewMode,
+    enterPreviewMode,
+    exitPreviewMode,
+    loading,
+  }
 }

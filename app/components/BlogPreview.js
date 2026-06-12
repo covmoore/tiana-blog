@@ -41,6 +41,14 @@ export default function BlogPreview(props) {
               )}
               style={{ backgroundImage: `url(${coverImageSrc})` }}
             />
+            <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity ease-in duration-300">
+              <text
+                className="text-black text-2xl font-medium"
+                style={{ textShadow: '-0.5px -0.5px 0 white, 0.5px -0.5px 0 white, -0.5px 0.5px 0 white, 0.5px 0.5px 0 white' }}
+              >
+                Click to view post
+              </text>
+            </div>
           </div>
           <div className="flex justify-center mt-6">
             <text className="text-4xl font-medium mt-8">{blog.title}</text>

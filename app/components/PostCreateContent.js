@@ -4,6 +4,9 @@ import { useSearchParams } from "next/navigation"
 import { classNames } from "../utils";
 import BlogPost from "./BlogPost";
 import { fetchBlogs, fetchConfig } from "../apis/blogs";
+import { saveDraftCache, loadDraftCache } from "../apis/draftCache";
+
+const DRAFT_CACHE_DEBOUNCE_MS = 1000
 
 const viewSelection = [
   { name: "Edit", current: true },
@@ -13,6 +16,7 @@ const viewSelection = [
 export default function PostCreateContent() {
   const searchParams = useSearchParams()
   const draftId = searchParams.get('postId')
+  const resume = searchParams.get('resume') === 'true'
 
   const [isPreviewContext, setPreviewContext] = useState(false);
   const [content, setContent] = useState("");
@@ -33,6 +37,31 @@ export default function PostCreateContent() {
   useEffect(() => {
     return () => inlineImagesRef.current.forEach((img) => URL.revokeObjectURL(img.url))
   }, [])
+
+  // Restore progress cached locally (e.g. after a page refresh or after the auth session expired)
+  useEffect(() => {
+    if (hydratedPost) return
+    const cache = loadDraftCache()
+    if (!cache) return
+    const cacheMatchesDraft = draftId ? Number(draftId) === cache.postId : !cache.postId
+    if (!resume && !cacheMatchesDraft) return
+    setTitle(cache.title ?? "")
+    setContent(cache.content ?? "")
+    setExistingCoverImage(cache.existingCoverImage ?? null)
+    if (cache.postId) setPostId(cache.postId)
+    if (cache.category) setCategory(cache.category)
+    setHydratedPost(cache)
+  }, [resume, draftId, hydratedPost])
+
+  // Cache progress locally shortly after each change, so it survives page refreshes
+  // and can be resumed if the auth session expires
+  useEffect(() => {
+    if (!((title && title.trim()) || (content && content.trim()))) return
+    const timeout = setTimeout(() => {
+      saveDraftCache({ title, content, category, postId, existingCoverImage })
+    }, DRAFT_CACHE_DEBOUNCE_MS)
+    return () => clearTimeout(timeout)
+  }, [title, content, category, postId, existingCoverImage])
 
   // Populate the form with the draft's saved progress once it has loaded
   useEffect(() => {

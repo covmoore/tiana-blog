@@ -1,12 +1,14 @@
 'use client'
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Intro from "./components/IntroSection"
 import IntroImage from "./components/IntroImage"
 import BlogPreview from "./components/BlogPreview"
 import EmptyPosts from "./components/EmptyPosts"
+import InProgressBanner from "./components/InProgressBanner"
 import { fetchBlogs } from "./apis/blogs"
 import { useAuth } from "./hooks/useAuth"
+import { hasInProgressDraft } from "./apis/draftCache"
 
 const BLOGS_PER_PAGE = 5
 
@@ -15,9 +17,17 @@ export default function Page() {
   const { data, loading, error } = fetchBlogs(isAuthenticated)
   const blogs = data ?? []
   const [visibleCount, setVisibleCount] = useState(BLOGS_PER_PAGE)
+  const [showResumeBanner, setShowResumeBanner] = useState(false)
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      setShowResumeBanner(hasInProgressDraft())
+    }
+  }, [isAuthenticated])
 
   return (
     <div className="flex flex-col items-center mx-auto">
+      {showResumeBanner && <InProgressBanner onDismiss={() => setShowResumeBanner(false)} />}
       <Intro key="intro" />
       <div className="flex col gap-16">
         <IntroImage />

@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { fetchConfig, authHeaders, updatePost } from '../apis/blogs';
 import { uploadImage, linkImagesToPost } from '../apis/images';
+import { clearDraftCache } from '../apis/draftCache';
 import axios from "axios";
 import EditorToolbar from './EditorToolbar';
 import TitleField from './TitleField';
@@ -97,6 +98,8 @@ export default function CreateEditContent(props) {
 
       await linkImagesToPost(bid, [coverImageObjectName, ...objectNames])
 
+      clearDraftCache()
+
       if (status === 'published') {
         router.push(`/posts/${payload.Key}`)
       } else {
@@ -114,7 +117,7 @@ export default function CreateEditContent(props) {
       <div className="w-full mb-4 border border-default-medium rounded-base bg-neutral-secondary-medium shadow-xs">
         <EditorToolbar onImageSelect={handleImageSelect} />
         <TitleField value={props.title} onChange={(e) => props.setTitle(e.target.value)} />
-        <CategoryField categories={categories} setCategory={props.setCategory} />
+        <CategoryField categories={categories} category={props.category} setCategory={props.setCategory} />
         <CoverImageField file={props.coverImage} existingImage={props.existingCoverImage} onChange={props.setCoverImage} />
         <EditorField value={props.content} onChange={(e) => props.setContent(e.target.value)} textareaRef={editorRef} />
       </div>

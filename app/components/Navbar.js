@@ -28,7 +28,7 @@ function handleRouteChange(href) {
 
 
 export default function Navbar() {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, isAdmin, previewMode, enterPreviewMode, exitPreviewMode } = useAuth()
   handleRouteChange(usePathname())
 
 
@@ -37,12 +37,30 @@ export default function Navbar() {
       <div className="mx-auto px-2">
         <div className="relative flex h-20 items-center justify-between">
           <div className="flex flex-1 items-center justify-between sm:items-stretch sm:justify-between">
-            <div className="flex flex-start text-5xl font-bold pl-5 pr-12 ">
+            <div className="flex items-center text-5xl font-bold pl-5 pr-12 gap-4">
               <a href='/' className='font-[Caveat] text-postBorderColor drop-shadow-md'>
                 <text>
                   Tiana's Blog
                 </text>
               </a>
+              {isAdmin && !previewMode && (
+                <button
+                  type="button"
+                  onClick={enterPreviewMode}
+                  className="text-sm font-medium normal-case rounded-md px-3 py-2 text-gray-700 hover:bg-buttonHoverColor hover:text-white"
+                >
+                  Preview Blog
+                </button>
+              )}
+              {isAdmin && previewMode && (
+                <button
+                  type="button"
+                  onClick={exitPreviewMode}
+                  className="text-sm font-medium normal-case rounded-md px-3 py-2 bg-postBorderColor text-white hover:bg-buttonSelectedColor"
+                >
+                  Admin Mode
+                </button>
+              )}
             </div>
             <div className="hidden sm:ml-0 sm:block">
               <div className="flex space-x-4">
