@@ -21,6 +21,7 @@ export default function BlogPost(props) {
   console.log("PROPS INTO BLOG POSt", props)
   const blog = props.blog
   const dateCreated = new Date(blog.dateCreated)
+  const dateUpdated = blog.dateUpdated ? new Date(blog.dateUpdated) : null
   const coverImageSrc = blog.coverImage ? getImageUrl(blog.coverImage) : fallbackCoverImage.src
   const router = useRouter()
   const { isAuthenticated } = useAuth()
@@ -36,15 +37,26 @@ export default function BlogPost(props) {
     getShowModal(false)
     router.push('/')
   }
+  function handleEdit() {
+    router.push(`/create?postId=${blog.bid}`)
+  }
   return (
     <div className="border-solid  mb-32 pt-1 bg-white rounded-lg">
       <img className="w-full max-h-[500px] object-cover rounded-t-lg" src={coverImageSrc} />
       <div className="mx-1">
         <div className="my-2 mx-5">
           <div className="flex flex-row justify-between my-6">
-            <text className="font-medium">Author: {blog.author}</text>
+            <div className="flex flex-col">
+              <text className="font-medium">Author: {blog.author}</text>
+              {isAuthenticated && <button className={
+                'mt-1 text-gray-700 hover:bg-buttonHoverColor hover:text-white rounded-md px-3 py-2 text-lg font-medium max-w-fit'
+              } id="edit-btn" onClick={handleEdit}>Edit Post</button>}
+            </div>
             <div className=" flex flex-row-reverse">
-              <text className="pl-1 font-medium">Date: {dateCreated.toDateString()}</text>
+              <text className="pl-1 font-medium">
+                Date: {dateCreated.toDateString()}
+                {dateUpdated && ` (last updated: ${dateUpdated.toDateString()})`}
+              </text>
               {blog.categoryName &&
                 <text className={classNames(`bg-${getCatColor(blog.categoryId)}`, "drop-shadow-md px-1 font-medium rounded-md box-border max-w-fit max-h-fit")}>
                   {blog.categoryName}
