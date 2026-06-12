@@ -1,9 +1,10 @@
 'use client'
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { fetchConfig, authHeaders } from '../apis/blogs';
+import { fetchConfig, authHeaders, updatePost } from '../apis/blogs';
 import { uploadImage, linkImagesToPost } from '../apis/images';
+import { clearDraftCache } from '../apis/draftCache';
 import axios from "axios";
 import EditorToolbar from './EditorToolbar';
 import TitleField from './TitleField';
@@ -11,6 +12,7 @@ import CategoryField from './CategoryField';
 import CoverImageField from './CoverImageField';
 import EditorField from './EditorField';
 import PublishButton from './PublishButton';
+import SaveDraftButton from './SaveDraftButton';
 
 function createKey(title) {
   return title.toLowerCase().replace(/\s+/g, '-')
@@ -19,6 +21,7 @@ function createKey(title) {
 export default function CreateEditContent(props) {
   const router = useRouter();
   const editorRef = useRef(null);
+  const [savingStatus, setSavingStatus] = useState(null)
   const { data } = fetchConfig("category")
   const categories = data ?? []
 
@@ -45,28 +48,33 @@ export default function CreateEditContent(props) {
     return { body, objectNames }
   }
 
-  const handleSubmit = async () => {
-    if (!props.coverImage) {
-      console.error("Error creating post: cover image is required")
+  const handleSubmit = async (status) => {
+    if (!props.coverImage && !props.existingCoverImage) {
+      console.error("Error saving post: cover image is required")
       return
     }
 
-    let catId = 0
-    if (props.category.categoryId == null) {
-      try {
+    if (!props.category) {
+      console.error("Error saving post: category is required")
+      return
+    }
+
+    setSavingStatus(status)
+    try {
+      let catId = props.category.categoryId
+      if (catId == null) {
         const response = await axios.post("http://localhost:8080/category", {
           CategoryName: props.category.categoryName
         }, { headers: authHeaders() })
         catId = response.data.categoryId
-      } catch (err) {
-        console.error("Error creating category ", err.message)
       }
-    } else {
-      catId = props.category.categoryId
-    }
 
-    try {
-      const { objectName } = await uploadImage('post', props.coverImage)
+      let coverImageObjectName = props.existingCoverImage
+      if (props.coverImage) {
+        const { objectName } = await uploadImage('post', props.coverImage)
+        coverImageObjectName = objectName
+      }
+
       const { body, objectNames } = await uploadInlineImages(props.content)
 
       const payload = {
@@ -74,27 +82,50 @@ export default function CreateEditContent(props) {
         Key: createKey(props.title),
         Author: "Tiana Montez",
         CategoryId: catId,
-        CoverImage: objectName,
+        CoverImage: coverImageObjectName,
         Body: body,
+        Status: status,
       }
-      const response = await axios.post("http://localhost:8080/posts", payload, { headers: authHeaders() })
-      await linkImagesToPost(response.data.bid, [objectName, ...objectNames])
-      router.push(`/posts/${payload.Key}`)
+
+      let bid = props.postId
+      if (bid) {
+        await updatePost(bid, payload)
+      } else {
+        const response = await axios.post("http://localhost:8080/posts", payload, { headers: authHeaders() })
+        bid = response.data.bid
+        props.setPostId(bid)
+      }
+
+      await linkImagesToPost(bid, [coverImageObjectName, ...objectNames])
+
+      clearDraftCache()
+
+      if (status === 'published') {
+        router.push(`/posts/${payload.Key}`)
+      } else {
+        props.setDraftSaved(true)
+      }
     } catch (err) {
-      console.error("Error creating post: ", err.message)
+      console.error("Error saving post: ", err.message)
+    } finally {
+      setSavingStatus(null)
     }
   }
 
   return (
-    <form action={handleSubmit}>
+    <form>
       <div className="w-full mb-4 border border-default-medium rounded-base bg-neutral-secondary-medium shadow-xs">
         <EditorToolbar onImageSelect={handleImageSelect} />
         <TitleField value={props.title} onChange={(e) => props.setTitle(e.target.value)} />
-        <CategoryField categories={categories} setCategory={props.setCategory} />
-        <CoverImageField file={props.coverImage} onChange={props.setCoverImage} />
+        <CategoryField categories={categories} category={props.category} setCategory={props.setCategory} />
+        <CoverImageField file={props.coverImage} existingImage={props.existingCoverImage} onChange={props.setCoverImage} />
         <EditorField value={props.content} onChange={(e) => props.setContent(e.target.value)} textareaRef={editorRef} />
       </div>
-      <PublishButton />
+      <div className="flex items-center gap-2">
+        <SaveDraftButton onClick={() => handleSubmit('draft')} disabled={savingStatus !== null} />
+        <PublishButton onClick={() => handleSubmit('published')} disabled={savingStatus !== null} />
+        {props.draftSaved && <span className="text-sm text-body">Draft saved</span>}
+      </div>
     </form>
   )
 }

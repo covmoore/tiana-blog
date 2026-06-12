@@ -35,7 +35,11 @@ export default {
       categoryColor5: '#fcd858',
       categoryColor6: '#58fcb8',
       categoryColor7: '#c458fc',
-      rose: '#f64a8a'
+      rose: '#f64a8a',
+      draftGray: '#4b5563',
+      draftGrayHover: '#374151',
+      progressBannerPink: '#ff5fa2',
+      progressBannerPinkHover: '#e84f8f'
     },
     theme: {
       extend: {

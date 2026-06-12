@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function useFetch(url) {
+function useFetch(url, headers = {}) {
     const [state, setState] = useState({
         data: null,
         loading: true,
@@ -13,7 +13,7 @@ function useFetch(url) {
             setState({data: null, loading: true, error: null});
             try {
                 const config = {
-                    headers: {}
+                    headers
                   };
                 const response = await axios.get(url, config);
                 setState({data: response.data, loading: false, error: null});
@@ -67,9 +67,11 @@ function usePost(url, payload) {
     return state;
 }
 
-export function fetchBlogs() {
-    const url = "http://localhost:8080/posts"
-    const request = useFetch(url);
+export function fetchBlogs(includeDrafts = false) {
+    const url = includeDrafts
+        ? "http://localhost:8080/posts?includeDrafts=true"
+        : "http://localhost:8080/posts"
+    const request = useFetch(url, includeDrafts ? authHeaders() : {});
     return request
 }
 
@@ -78,6 +80,11 @@ export function createPost(payload) {
     const url = "http://localhost:8080/posts"
     const request = usePost(url, payload);
     return request
+}
+
+export async function updatePost(postId, payload) {
+    const response = await axios.put(`http://localhost:8080/posts/${postId}`, payload, { headers: authHeaders() })
+    return response.data
 }
 
 export async function deletePost(postId) {

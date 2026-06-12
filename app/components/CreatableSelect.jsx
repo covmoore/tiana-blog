@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 
-export default function CreatableSelect({ initialCategories, setCategory }) {
+export default function CreatableSelect({ initialCategories, value, setCategory }) {
   const [categories, setCategories] = useState(initialCategories ?? []);
   const [selected, setSelected] = useState(null);
   const [inputValue, setInputValue] = useState("");
@@ -29,6 +29,13 @@ export default function CreatableSelect({ initialCategories, setCategory }) {
   useEffect(() => {
     if (initialCategories) setCategories(initialCategories);
   }, [initialCategories]);
+
+  useEffect(() => {
+    if (value && value.categoryName !== inputValue) {
+      setSelected(value);
+      setInputValue(value.categoryName);
+    }
+  }, [value]);
 
   function handleSelect(value) {
     setSelected(value);
