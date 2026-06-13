@@ -124,6 +124,7 @@ export default function PostCreateContent() {
       </div>
       {isPreviewContext ? <BlogPost {...{
         blog: {
+          bid: postId,
           body: previewBody,
           author: "Tiana Montez",
           category: category,
