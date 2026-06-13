@@ -52,9 +52,9 @@ export default function AboutMe() {
   return (
     <div className="flex flex-col mx-3">
       <div className="flex justify-center">
-        <text className="text-5xl"> About Me</text>
+        <text className="text-4xl sm:text-5xl"> About Me</text>
       </div>
-      <div className="mx-60">
+      <div className="mx-2 sm:mx-60">
         {loading && <p>Loading...</p>}
         {error && <p style={{ color: 'red' }}>{error}</p>}
         {data && (editing ? (
@@ -104,11 +104,11 @@ export default function AboutMe() {
           </>
         ))}
       </div>
-      <div className="flex flex-wrap gap-4 mx-60 my-7">
+      <div className="flex flex-wrap gap-4 mx-2 sm:mx-60 my-7">
         {imagesLoading && <p>Loading images...</p>}
         {imagesError && <p style={{ color: 'red' }}>{imagesError}</p>}
         {images && images.map((img) => (
-          <img key={img.id} src={img.url} alt={img.objectName} className="max-h-[400px] object-cover" />
+          <img key={img.id} src={img.url} alt={img.objectName} className="max-h-[400px] max-w-full object-cover" />
         ))}
       </div>
     </div>

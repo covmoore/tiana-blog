@@ -90,8 +90,8 @@ export default function Intro() {
         </div>
       ) : (
         <div>
-          <div className="flex flex-row text-4xl justify-center">{data.title}</div>
-          <div className="flex flex-row text-xl justify-center px-4 py-4">{data.body}</div>
+          <div className="flex flex-row text-3xl sm:text-4xl justify-center max-sm:text-center max-sm:px-4">{data.title}</div>
+          <div className="flex flex-row text-lg sm:text-xl justify-center px-4 py-4 max-sm:text-center">{data.body}</div>
           {isAuthenticated && (
             <div className="flex justify-end px-4">
               <button
