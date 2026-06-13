@@ -42,17 +42,17 @@ export default function BlogPost(props) {
   }
   return (
     <div className="border-solid  mb-32 pt-1 bg-white rounded-lg">
-      <img className="w-full max-h-[500px] object-cover rounded-t-lg" src={coverImageSrc} />
+      <img className="w-full max-h-[300px] sm:max-h-[500px] object-cover rounded-t-lg" src={coverImageSrc} />
       <div className="mx-1">
         <div className="my-2 mx-5">
-          <div className="flex flex-row justify-between my-6">
+          <div className="flex flex-row max-sm:flex-col max-sm:gap-3 justify-between my-6">
             <div className="flex flex-col">
               <text className="font-medium">Author: {blog.author}</text>
               {isAuthenticated && <button className={
                 'mt-1 text-gray-700 hover:bg-buttonHoverColor hover:text-white rounded-md px-3 py-2 text-lg font-medium max-w-fit'
               } id="edit-btn" onClick={handleEdit}>Edit Post</button>}
             </div>
-            <div className=" flex flex-row-reverse">
+            <div className=" flex flex-row-reverse max-sm:flex-col max-sm:items-start max-sm:gap-1">
               <text className="pl-1 font-medium">
                 Date: {dateCreated.toDateString()}
                 {dateUpdated && ` (last updated: ${dateUpdated.toDateString()})`}
@@ -77,7 +77,7 @@ export default function BlogPost(props) {
             </div>
           }
           <div className="flex justify-center my-6">
-            <text className="text-4xl font-medium underline">{blog.title}</text>
+            <text className="text-2xl sm:text-4xl font-medium underline max-sm:text-center max-sm:break-words">{blog.title}</text>
           </div>
           <div className="my-6">
             <div className="prose lg:prose-xl prose-code:before:hidden prose-code:after:hidden ">

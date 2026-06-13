@@ -11,17 +11,17 @@ export default function BlogPreview(props) {
   const dateCreated = blog.dateCreated ? new Date(blog.dateCreated) : null
   const coverImageSrc = blog.coverImage ? getImageUrl(blog.coverImage) : fallbackCoverImage.src
   return (
-    <a href={route}>
+    <a href={route} className="max-sm:block max-sm:h-full max-sm:w-full">
       <div className={classNames(
-        isDraft ? "bg-draftGray/90 hover:bg-draftGray" : "bg-blogPreviewOrange/70 hover:bg-blogPreviewOrange",
-        `group relative overflow-hidden hover:shadow-3xl transition-all ease-in duration-300 border-solid border-${getCatColor(blog.categoryId)} border-2 border-spacing-28 mb-12 rounded-md shadow-lg w-[45vw] mx-auto`
+        isDraft ? "bg-draftGray/90 sm:hover:bg-draftGray" : "bg-blogPreviewOrange/70 max-sm:bg-blogPreviewOrange sm:hover:bg-blogPreviewOrange",
+        `group relative overflow-hidden sm:hover:shadow-3xl transition-all ease-in duration-300 border-solid border-${getCatColor(blog.categoryId)} border-2 border-spacing-28 max-sm:h-full sm:mb-12 rounded-md shadow-lg w-full sm:w-[45vw] mx-auto`
       )}>
         <div
           className={classNames("absolute inset-0 -z-10 bg-cover bg-center", isDraft ? "opacity-30" : "opacity-80")}
           style={{ backgroundImage: `url(${coverImageSrc})` }}
         />
-        <div className=" mx-4 py-[30px] flex justify-center flex-col content-center flex-wrap items-center w-[-webkit-fill-available]">
-          <div className="flex flex-row my-6 justify-between w-[-webkit-fill-available]">
+        <div className=" mx-4 py-[30px] max-sm:h-full flex justify-center flex-col content-center flex-wrap max-sm:flex-nowrap items-center w-[-webkit-fill-available]">
+          <div className="flex flex-row max-sm:flex-col max-sm:gap-2 my-6 justify-between w-[-webkit-fill-available]">
             <text className="font-normal black">Date: {dateCreated ? dateCreated.toDateString() : '-'}</text>
             <div>
               {isAuthenticated && (
@@ -33,15 +33,15 @@ export default function BlogPreview(props) {
               <text className="ml-2 font-normal">Author: {blog.author}</text>
             </div>
           </div>
-          <div className="relative w-full h-0 group-hover:h-[350px] overflow-hidden transition-all ease-in duration-300">
+          <div className="relative w-full h-0 max-sm:flex-1 sm:group-hover:h-[350px] overflow-hidden transition-all ease-in duration-300">
             <div
               className={classNames(
-                "absolute inset-0 -z-10 group-hover:z-10 bg-cover bg-center transition-opacity ease-in duration-300",
-                isDraft ? "opacity-30 group-hover:opacity-60" : "opacity-80 group-hover:opacity-100"
+                "absolute inset-0 -z-10 max-sm:z-10 sm:group-hover:z-10 bg-cover bg-center transition-opacity ease-in duration-300",
+                isDraft ? "opacity-30 sm:group-hover:opacity-60" : "opacity-80 max-sm:opacity-100 sm:group-hover:opacity-100"
               )}
               style={{ backgroundImage: `url(${coverImageSrc})` }}
             />
-            <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity ease-in duration-300">
+            <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 sm:group-hover:opacity-100 transition-opacity ease-in duration-300">
               <text
                 className="text-black text-2xl font-medium"
                 style={{ textShadow: '-0.5px -0.5px 0 white, 0.5px -0.5px 0 white, -0.5px 0.5px 0 white, 0.5px 0.5px 0 white' }}
@@ -51,7 +51,7 @@ export default function BlogPreview(props) {
             </div>
           </div>
           <div className="flex justify-center mt-6">
-            <text className="text-4xl font-medium mt-8">{blog.title}</text>
+            <text className="text-2xl sm:text-4xl font-medium mt-8 max-sm:text-center">{blog.title}</text>
           </div>
         </div>
       </div>

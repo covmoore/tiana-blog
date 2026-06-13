@@ -32,28 +32,37 @@ export default function Page() {
       <div className="flex col gap-16">
         <IntroImage />
       </div>
-      <div>
-        <div className="sticky top-0 pb-2 mx-6 my-10">
+      <div className="max-sm:w-full">
+        <div className="sticky top-0 pb-2 mx-6 max-sm:mx-2 my-10">
           {loading && <p>Loading...</p>}
           {error && <p style={{ color: 'red' }}>error</p>}
           {blogs.length > 0 &&
             <div className="p-4 bg-gray-100">
-              <div className="max-w-screen-xl min-h-screen-m">
-                {blogs.slice(0, visibleCount).map((blog) => (
-                  <BlogPreview key={blog.bid} {...{ blog }} />
+              <div className="sm:hidden h-[78vh] overflow-y-auto snap-y snap-mandatory no-scrollbar">
+                {blogs.map((blog) => (
+                  <div key={blog.bid} className="snap-center h-full py-2 flex items-center">
+                    <BlogPreview {...{ blog }} />
+                  </div>
                 ))}
               </div>
-              {visibleCount < blogs.length &&
-                <div className="flex justify-center">
-                  <button
-                    type="button"
-                    onClick={() => setVisibleCount((count) => count + BLOGS_PER_PAGE)}
-                    className="text-black rounded-md bg-brand box-border bg-postForegroundColor hover:bg-buttonHoverColor hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
-                  >
-                    Show more
-                  </button>
+              <div className="hidden sm:block">
+                <div className="max-w-screen-xl min-h-screen-m">
+                  {blogs.slice(0, visibleCount).map((blog) => (
+                    <BlogPreview key={blog.bid} {...{ blog }} />
+                  ))}
                 </div>
-              }
+                {visibleCount < blogs.length &&
+                  <div className="flex justify-center">
+                    <button
+                      type="button"
+                      onClick={() => setVisibleCount((count) => count + BLOGS_PER_PAGE)}
+                      className="text-black rounded-md bg-brand box-border bg-postForegroundColor hover:bg-buttonHoverColor hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+                    >
+                      Show more
+                    </button>
+                  </div>
+                }
+              </div>
             </div>
           }
           {blogs.length === 0 && <EmptyPosts />}

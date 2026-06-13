@@ -16,6 +16,11 @@ export default function IntroImage() {
 
   const textClass = "font-[Caveat] text-8xl font-bold text-rose text-center"
 
+  // hover reveal is desktop-only; mobile taps go straight to the link
+  function isDesktop() {
+    return typeof window !== 'undefined' && window.matchMedia('(min-width: 640px)').matches
+  }
+
   function handleFileChange(e) {
     const file = e.target.files?.[0]
     if (!file) return
@@ -46,11 +51,11 @@ export default function IntroImage() {
     <div className="relative">
       <a
         href="/about-me"
-        onMouseEnter={e => document.getElementById('about-me-text').setAttribute('class', textClass + ' animate-fadeIn')}
-        onMouseLeave={e => document.getElementById('about-me-text').setAttribute('class', textClass + ' animate-fadeOut opacity-0')}
+        onMouseEnter={e => isDesktop() && document.getElementById('about-me-text').setAttribute('class', textClass + ' animate-fadeIn')}
+        onMouseLeave={e => isDesktop() && document.getElementById('about-me-text').setAttribute('class', textClass + ' animate-fadeOut opacity-0')}
       >
         <div className="relative text-center">
-          <img src={homeImageSrc} className="h-full min-w-[55vw] object-cover mt-5" />
+          <img src={homeImageSrc} className="h-full min-w-[55vw] max-sm:w-full max-sm:min-w-0 object-cover mt-5" />
           <div className="w-full absolute top-0 left-0 text-center mt-[35%]">
             <h1
               id="about-me-text"
