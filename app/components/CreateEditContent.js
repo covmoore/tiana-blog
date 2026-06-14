@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { fetchConfig, authHeaders, updatePost } from '../apis/blogs';
 import { uploadImage, linkImagesToPost } from '../apis/images';
 import { clearDraftCache } from '../apis/draftCache';
+import { BASE_URL } from '../apis/config';
 import axios from "axios";
 import EditorToolbar from './EditorToolbar';
 import TitleField from './TitleField';
@@ -63,7 +64,7 @@ export default function CreateEditContent(props) {
     try {
       let catId = props.category.categoryId
       if (catId == null) {
-        const response = await axios.post("http://localhost:8080/category", {
+        const response = await axios.post(`${BASE_URL}/category`, {
           CategoryName: props.category.categoryName
         }, { headers: authHeaders() })
         catId = response.data.categoryId
@@ -91,7 +92,7 @@ export default function CreateEditContent(props) {
       if (bid) {
         await updatePost(bid, payload)
       } else {
-        const response = await axios.post("http://localhost:8080/posts", payload, { headers: authHeaders() })
+        const response = await axios.post(`${BASE_URL}/posts`, payload, { headers: authHeaders() })
         bid = response.data.bid
         props.setPostId(bid)
       }
