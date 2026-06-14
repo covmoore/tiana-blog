@@ -1,3 +1,7 @@
 node_modules/
 .next/
+# Ignore user-uploaded/runtime content in public/, but keep source assets that
+# are imported by the app (e.g. the fallback cover image bundled by webpack).
 public/*
+!public/dawg.png
+!public/tiana-about-me.JPG
