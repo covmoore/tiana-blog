@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { authHeaders } from './blogs';
-
-const BASE_URL = "http://localhost:8080"
+import { BASE_URL } from './config';
 
 export function fetchAboutMe() {
     const [state, setState] = useState({ data: null, loading: true, error: null });

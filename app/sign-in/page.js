@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import { BASE_URL } from '../apis/config'
 
 export default function SignInPage() {
   const router = useRouter()
@@ -16,7 +17,7 @@ export default function SignInPage() {
     setError(null)
     setLoading(true)
     try {
-      const response = await axios.post('http://localhost:8080/authorize', { username, password })
+      const response = await axios.post(`${BASE_URL}/authorize`, { username, password })
       localStorage.setItem('token', response.data.token)
       router.push('/')
     } catch (err) {

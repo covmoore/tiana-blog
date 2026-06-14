@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { BASE_URL } from './config';
 
 function useFetch(url, headers = {}) {
     const [state, setState] = useState({
@@ -69,31 +70,31 @@ function usePost(url, payload) {
 
 export function fetchBlogs(includeDrafts = false) {
     const url = includeDrafts
-        ? "http://localhost:8080/posts?includeDrafts=true"
-        : "http://localhost:8080/posts"
+        ? `${BASE_URL}/posts?includeDrafts=true`
+        : `${BASE_URL}/posts`
     const request = useFetch(url, includeDrafts ? authHeaders() : {});
     return request
 }
 
 
 export function createPost(payload) {
-    const url = "http://localhost:8080/posts"
+    const url = `${BASE_URL}/posts`
     const request = usePost(url, payload);
     return request
 }
 
 export async function updatePost(postId, payload) {
-    const response = await axios.put(`http://localhost:8080/posts/${postId}`, payload, { headers: authHeaders() })
+    const response = await axios.put(`${BASE_URL}/posts/${postId}`, payload, { headers: authHeaders() })
     return response.data
 }
 
 export async function deletePost(postId) {
-    const response = await axios.delete(`http://localhost:8080/posts/${postId}`, { headers: authHeaders() })
+    const response = await axios.delete(`${BASE_URL}/posts/${postId}`, { headers: authHeaders() })
     return response.data
 }
 
 export function fetchConfig(type) {
-  const url = `http://localhost:8080/config/${type}`
+  const url = `${BASE_URL}/config/${type}`
   const request = useFetch(url);
   return request
 }
