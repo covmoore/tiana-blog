@@ -16,6 +16,17 @@ ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 # public/ is gitignored, so make sure it exists for the COPY in the run stage.
 RUN mkdir -p public && npm run build
 
+# ---- Dev stage ----
+# Used by docker-compose for local dev: source is bind-mounted over /app, and
+# `next dev` compiles on the fly, so no prebuilt .next is required.
+FROM node:25-alpine AS dev
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+EXPOSE 3000
+CMD ["npm", "run", "dev"]
+
 # ---- Run stage ----
 FROM node:25-alpine AS runner
 WORKDIR /app

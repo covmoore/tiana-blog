@@ -17,6 +17,12 @@ function urlTransform(url) {
   return url.startsWith('blob:') ? url : defaultUrlTransform(url)
 }
 
+const markdownComponents = {
+  a: ({ node, ...props }) => (
+    <a {...props} className="text-linkBlue underline" />
+  ),
+}
+
 export default function BlogPost(props) {
   console.log("PROPS INTO BLOG POSt", props)
   const blog = props.blog
@@ -81,7 +87,7 @@ export default function BlogPost(props) {
           </div>
           <div className="my-6">
             <div className="prose lg:prose-xl prose-code:before:hidden prose-code:after:hidden ">
-              <Markdown urlTransform={urlTransform}>{resolveImageRefs(blog.body)}</Markdown>
+              <Markdown urlTransform={urlTransform} components={markdownComponents}>{resolveImageRefs(blog.body)}</Markdown>
             </div>
           </div>
         </div>

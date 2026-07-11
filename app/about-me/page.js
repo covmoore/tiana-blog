@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { fetchAboutMeImages } from '../apis/images'
 import { fetchAboutMe, updateAboutMe } from '../apis/aboutMe'
 import { useAuth } from '../hooks/useAuth'
+import Markdown, { defaultUrlTransform } from "react-markdown"
 
 export default function AboutMe() {
   const { data: images, loading: imagesLoading, error: imagesError } = fetchAboutMeImages()
@@ -49,6 +50,21 @@ export default function AboutMe() {
     }
   }
 
+  function urlTransform(url) {
+    return url.startsWith('blob:') ? url : defaultUrlTransform(url)
+  }
+
+  const markdownComponents = {
+    a: ({ node, ...props }) => (
+      <a {...props} className="text-linkBlue underline" />
+    ),
+  }
+
+  function resolveImageRefs(body) {
+    if (!body) return body
+    return body.replace(/image:\/\/([^)\s]+)/g, (_, ref) => getImageUrl(decodeURIComponent(ref)))
+  }
+
   return (
     <div className="flex flex-col mx-3">
       <div className="flex justify-center">
@@ -88,7 +104,7 @@ export default function AboutMe() {
           <>
             {data.body.split('\n\n').map((paragraph, i) => (
               <div key={i} className="my-7">
-                <text>{paragraph}</text>
+                <Markdown urlTransform={urlTransform} components={markdownComponents}>{resolveImageRefs(paragraph)}</Markdown>
               </div>
             ))}
             {isAuthenticated && (
