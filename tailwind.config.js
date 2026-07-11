@@ -39,7 +39,8 @@ export default {
       draftGray: '#4b5563',
       draftGrayHover: '#374151',
       progressBannerPink: '#ff5fa2',
-      progressBannerPinkHover: '#e84f8f'
+      progressBannerPinkHover: '#e84f8f',
+      linkBlue: '#0000ee'
     },
     theme: {
       extend: {
